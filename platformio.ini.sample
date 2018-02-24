@@ -13,5 +13,9 @@ platform = espressif8266
 board = esp01_1m
 framework = arduino
 
+
+; For the very first firmware upload over uart you have to uncommend
+; the following two lines
+
 upload_port = wifi-socket-1.local
 upload_flags = --auth=OTAPASS
