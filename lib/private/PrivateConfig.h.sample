@@ -1,0 +1,17 @@
+#ifndef __PRIVATE_CONFIG_H__
+#define __PRIVATE_CONFIG_H__
+
+#include <Arduino.h>
+
+#define WIFI_SSID "SSID"
+#define WIFI_PWD "PASS"
+
+#define OTA_HOSTNAME "wifi-socket-1"
+#define OTA_PASS "OTAPASS"
+
+#define OHAB_HOST "192.168.1.1"
+#define OHAB_PORT 80
+#define OHAB_CREDENTIALS "xxxxxxxxxxxxxxxxxxx"
+#define OHAB_ITEM "pOD_Licht"
+
+#endif
