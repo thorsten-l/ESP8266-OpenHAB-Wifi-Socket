@@ -11,7 +11,17 @@
 
 #define OHAB_HOST "192.168.1.1"
 #define OHAB_PORT 80
-#define OHAB_CREDENTIALS "xxxxxxxxxxxxxxxxxxx"
+
+// #undef OHAB_USE_AUTH if your OpenHAB server does not need authentication
+#define OHAB_USE_AUTH
+
+// If you don't know how to create the basic auth credentials string
+// you can use:
+// https://www.blitter.se/utils/basic-authentication-header-generator/
+//
+#define OHAB_CREDENTIALS "SGFsbG86V2VsdA=="
+
+// OpenHAB Switch Item to trigger
 #define OHAB_ITEM "pOD_Licht"
 
 #endif

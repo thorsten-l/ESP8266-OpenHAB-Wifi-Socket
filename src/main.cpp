@@ -64,7 +64,9 @@ void openHabSendValue( const char* value )
   }
 
   String request = String("GET /CMD?") + OHAB_ITEM + "=" + value + " HTTP/1.1\r\n" +
+  #ifdef OHAB_USE_AUTH
                "Authorization: Basic " + OHAB_CREDENTIALS + "\r\n" +
+  #endif
                "Host: " + OHAB_HOST + "\r\n" +
                "Connection: close\r\n\r\n";
 
