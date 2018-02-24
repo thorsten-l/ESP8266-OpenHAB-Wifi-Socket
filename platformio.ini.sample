@@ -14,4 +14,4 @@ board = esp01_1m
 framework = arduino
 
 upload_port = wifi-socket-1.local
-upload_flags = --auth=abcdefgh
+upload_flags = --auth=OTAPASS
