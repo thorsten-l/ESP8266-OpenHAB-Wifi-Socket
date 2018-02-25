@@ -15,6 +15,10 @@
 // #undef OHAB_USE_AUTH if your OpenHAB server does not need authentication
 #define OHAB_USE_AUTH
 
+// #undef OHAB_DISABLE_CALLBACK if you like to callback the power button
+// trigger to OpenHAB
+#define OHAB_DISABLE_CALLBACK
+
 // If you don't know how to create the basic auth credentials string
 // you can use:
 // https://www.blitter.se/utils/basic-authentication-header-generator/

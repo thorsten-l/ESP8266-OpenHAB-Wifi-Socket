@@ -49,6 +49,8 @@ void ISRwatchdog()
 
 void openHabSendValue( const char* value )
 {
+#ifndef OHAB_DISABLE_CALLBACK
+
   WiFiClient client;
 
   Serial.println( "Sending to OpenHab");
@@ -84,6 +86,8 @@ void openHabSendValue( const char* value )
 
   //Serial.println("\nclosing connection");
   client.stop();
+
+#endif
 }
 
 void toggleRelay()
@@ -203,7 +207,7 @@ void setup() {
   Serial.println();
   Serial.println();
   Serial.println();
-  Serial.println(F("WiFi Socket 1.0.0 - February 2018 by Dr. Thorsten Ludewig <t.ludewig@gmail.com>"));
+  Serial.println(F("WiFi Socket 1.0.2 - February 2018 by Dr. Thorsten Ludewig <t.ludewig@gmail.com>"));
   Serial.println( "Build date: " __DATE__ " " __TIME__ );
   LOG1( "OTA hostname = %s\n", OTA_HOSTNAME );
   LOG1( "ESP chip id = %08x\n", ESP.getChipId());
