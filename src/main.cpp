@@ -146,7 +146,7 @@ void handleNotFound()
 
 void handleRoot()
 {
-  String message = "<html><body><h1>WiFi Socket</h1>\n";
+  String message = "<html><body><h1>WiFi Socket (" OTA_HOSTNAME ")</h1>\n";
   message += "state = ";
   message += ( powerIsOn ) ? "on" : "off";
   message += "<hr><p><a href='on'>on</a>";
