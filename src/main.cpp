@@ -12,6 +12,10 @@
 #include <WiFiSetup.hpp>
 #include <OTASetup.hpp>
 
+#ifdef ALEXA_ENABLE
+#include <fauxmoESP.h>
+#endif
+
 #define POWER_BUTTON 14
 #define RELAY_TRIGGER_OFF 5
 #define RELAY_TRIGGER_ON 12
@@ -24,6 +28,10 @@ volatile int watchdogCounter;
 
 static Ticker watchdogTicker;
 static ESP8266WebServer server(80);
+
+#ifdef ALEXA_ENABLE
+static fauxmoESP fauxmo;
+#endif
 
 void restartSystem()
 {
@@ -105,6 +113,8 @@ void toggleRelay()
     digitalWrite( RELAY_TRIGGER_ON, 1 );
   }
   powerIsOn ^= true;
+
+  LOG1( "toggle power state to: %s\n", (powerIsOn) ? "ON" : "OFF" );
 }
 
 void powerButtonPressed()
@@ -146,26 +156,31 @@ void handleNotFound()
 
 void handleRoot()
 {
-  String message = "<html><body><h1>WiFi Socket (" OTA_HOSTNAME ")</h1>\n";
+  String message = "<html><body><h1>OpenHAB/Alexa WiFi Socket (" OTA_HOSTNAME ")</h1>";
   message += "<h4>Version " APP_VERSION " by " APP_AUTHOR " </h4>";
 
+  message += "<h4>Current State</h4>power is ";
+  message += ( powerIsOn ) ? "on" : "off";
+  message += "<h4>Actions</h4><a href='on'>on</a>";
+  message += "<br/><a href='off'>off</a>";
+  message += "<br/><a href='state'>state</a>";
+
+  message += "<h4>Build Information</h4>";
+
+  message += "Build date = " __DATE__ " " __TIME__ "<br/>";
+
   #ifdef OHAB_USE_AUTH
-    message += "OpenHAB use authentication = true<br/>\n";
+    message += "OpenHAB use authentication = true<br/>";
   #else
-    message += "OpenHAB use authentication = false<br/>\n";
+    message += "OpenHAB use authentication = false<br/>";
   #endif
 
   #ifdef OHAB_DISABLE_CALLBACK
-    message += "OpenHAB disable callback = true<br/>\n";
+    message += "OpenHAB disable callback = true<br/>";
   #else
-    message += "OpenHAB disable callback  = false<br/>\n";
+    message += "OpenHAB disable callback  = false<br/>";
   #endif
 
-  message += "<hr/>state = ";
-  message += ( powerIsOn ) ? "on" : "off";
-  message += "<hr/><a href='on'>on</a>";
-  message += "<br/><a href='off'>off</a>";
-  message += "<br/><a href='state'>state</a>";
   message += "</body></html>";
   server.send( 200, "text/html", message );
 }
@@ -221,7 +236,7 @@ void setup() {
   Serial.println();
   Serial.println();
   Serial.println();
-  Serial.println(F("WiFi Socket " APP_VERSION " - February 2018 by " APP_AUTHOR ));
+  Serial.println(F("OpenHAB/Alexa WiFi Socket " APP_VERSION " - by " APP_AUTHOR ));
   Serial.println( "Build date: " __DATE__ " " __TIME__ );
   LOG1( "OTA hostname = %s\n", OTA_HOSTNAME );
   LOG1( "ESP chip id = %08x\n", ESP.getChipId());
@@ -233,6 +248,22 @@ void setup() {
   digitalWrite( WIFI_LED, 1 );
   otaSetup();
   initWebServer();
+
+#ifdef ALEXA_ENABLE
+  fauxmo.addDevice(ALEXA_DEVICENAME);
+  fauxmo.enable(true);
+
+  fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state) {
+      Serial.printf("(%ld) Device #%d (%s) state: %s\n", millis(), device_id, device_name, state ? "ON" : "OFF");
+      powerIsOn = state ^ true;
+      buttonPressed = true;
+  });
+
+  fauxmo.onGetState([](unsigned char device_id, const char * device_name) {
+      return powerIsOn;
+  });
+#endif
+
   wifiConnected = true;
 }
 
@@ -263,4 +294,8 @@ void loop() {
   watchdogCounter = 0;
   server.handleClient();
   ArduinoOTA.handle();
+  
+#ifdef ALEXA_ENABLE
+  fauxmo.handle();
+#endif
 }
