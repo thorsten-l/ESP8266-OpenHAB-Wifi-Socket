@@ -2,6 +2,8 @@
 Alternative Firmware for https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko/p/2291706
 
 ## Compile
+This is a [PlatformIO](https://platformio.org/) project.
+
 First rename and edit
 
 - `platformio.ini.sample` to `platformio.ini`
