@@ -9,6 +9,7 @@
 #define WIFI_SSID "SSID"
 #define WIFI_PWD "PASS"
 
+#define ALEXA_ENABLE
 #define ALEXA_DEVICENAME "Steckdose"
 
 #define OTA_HOSTNAME "wifi-socket-1"
