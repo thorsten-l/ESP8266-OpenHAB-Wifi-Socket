@@ -150,15 +150,15 @@ void handleRoot()
   message += "<h4>Version " APP_VERSION " by " APP_AUTHOR " </h4>";
 
   #ifdef OHAB_USE_AUTH
-    message += "ota use auth = true<br/>\n";
+    message += "OpenHAB use authentication = true<br/>\n";
   #else
-    message += "ota use auth = false<br/>\n";
+    message += "OpenHAB use authentication = false<br/>\n";
   #endif
 
   #ifdef OHAB_DISABLE_CALLBACK
-    message += "ota disable callback = true<br/>\n";
+    message += "OpenHAB disable callback = true<br/>\n";
   #else
-    message += "ota disable callback  = false<br/>\n";
+    message += "OpenHAB disable callback  = false<br/>\n";
   #endif
 
   message += "<hr/>state = ";
