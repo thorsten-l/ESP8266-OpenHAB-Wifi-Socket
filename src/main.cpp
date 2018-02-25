@@ -147,12 +147,26 @@ void handleNotFound()
 void handleRoot()
 {
   String message = "<html><body><h1>WiFi Socket (" OTA_HOSTNAME ")</h1>\n";
-  message += "state = ";
+  message += "<h4>Version " APP_VERSION " by " APP_AUTHOR " </h4>";
+
+  #ifdef OHAB_USE_AUTH
+    message += "ota use auth = true<br/>\n";
+  #else
+    message += "ota use auth = false<br/>\n";
+  #endif
+
+  #ifdef OHAB_DISABLE_CALLBACK
+    message += "ota disable callback = true<br/>\n";
+  #else
+    message += "ota disable callback  = false<br/>\n";
+  #endif
+
+  message += "<hr/>state = ";
   message += ( powerIsOn ) ? "on" : "off";
-  message += "<hr><p><a href='on'>on</a>";
-  message += "</br><a href='off'>off</a>";
-  message += "</br><a href='state'>state</a>";
-  message += "</p></body></html>";
+  message += "<hr/><a href='on'>on</a>";
+  message += "<br/><a href='off'>off</a>";
+  message += "<br/><a href='state'>state</a>";
+  message += "</body></html>";
   server.send( 200, "text/html", message );
 }
 
@@ -207,7 +221,7 @@ void setup() {
   Serial.println();
   Serial.println();
   Serial.println();
-  Serial.println(F("WiFi Socket 1.0.2 - February 2018 by Dr. Thorsten Ludewig <t.ludewig@gmail.com>"));
+  Serial.println(F("WiFi Socket " APP_VERSION " - February 2018 by " APP_AUTHOR ));
   Serial.println( "Build date: " __DATE__ " " __TIME__ );
   LOG1( "OTA hostname = %s\n", OTA_HOSTNAME );
   LOG1( "ESP chip id = %08x\n", ESP.getChipId());

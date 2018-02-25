@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 
+#define APP_VERSION "1.0.4"
+#define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
+
 #define WIFI_SSID "SSID"
 #define WIFI_PWD "PASS"
 
