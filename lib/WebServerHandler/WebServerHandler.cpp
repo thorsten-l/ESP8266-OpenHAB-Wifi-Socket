@@ -159,7 +159,9 @@ void handleNotFound()
 
 void handleRoot()
 {
-  String message = "<html><body><h1>OpenHAB/Alexa WiFi Socket (" OTA_HOSTNAME ")</h1>";
+  String message = "<html><body><h1>OpenHAB/Alexa WiFi Socket (";
+  message += otaSetup.getHostname();
+  message +=  ")</h1>";
   message += "<h4>Version " APP_VERSION " by " APP_AUTHOR " </h4>";
 
   message += "<h4>Current State</h4>power is ";
