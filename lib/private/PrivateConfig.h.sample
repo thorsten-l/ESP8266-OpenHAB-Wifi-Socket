@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define APP_VERSION "1.1.3"
+#define APP_VERSION "2.0.2"
 #define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
 
 #define WIFI_SSID "SSID"
@@ -13,7 +13,7 @@
 #define ALEXA_DEVICENAME "Steckdose"
 
 #define OTA_HOSTNAME "wifi-socket-%08x"
-#define OTA_PASS "OTAPASS"
+#define OTA_PASSWORD "otapass"
 
 #define OHAB_HOST "192.168.1.1"
 #define OHAB_PORT 80
