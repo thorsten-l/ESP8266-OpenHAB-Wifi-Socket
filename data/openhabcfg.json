@@ -1,0 +1,8 @@
+{
+  "enabled" : true,
+  "host" : "192.168.1.1",
+  "port" : "80",
+  "use.authentication" : true,
+  "credentials" : "SGFsbG86V2VsdA==",
+  "item.name" : "WifiSocket1",
+}

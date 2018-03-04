@@ -1,0 +1,6 @@
+{
+  "ssid" : "SampleSSID",
+  "password" : "1234567812345678",
+  "mode" : "STA",
+  "adminPwd" : "admin"
+}

@@ -9,21 +9,21 @@
 #define WIFI_SSID "SSID"
 #define WIFI_PWD "PASS"
 
-#define ALEXA_ENABLE
+#define ALEXA_ENABLED true
 #define ALEXA_DEVICENAME "Steckdose"
 
-#define OTA_HOSTNAME "wifi-socket-1"
+#define OTA_HOSTNAME "wifi-socket-%08x"
 #define OTA_PASS "OTAPASS"
 
 #define OHAB_HOST "192.168.1.1"
 #define OHAB_PORT 80
 
 // #undef OHAB_USE_AUTH if your OpenHAB server does not need authentication
-#define OHAB_USE_AUTH
+#define OHAB_USE_AUTHENTICATION false
 
 // #undef OHAB_DISABLE_CALLBACK if you like to callback the power button
 // trigger to OpenHAB
-#define OHAB_DISABLE_CALLBACK
+#define OHAB_ENABLE_CALLBACK false
 
 // If you don't know how to create the basic auth credentials string
 // you can use:
