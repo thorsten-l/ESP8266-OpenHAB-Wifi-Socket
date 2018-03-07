@@ -226,9 +226,14 @@ void WebServerHandler::setup()
 
   server.on( "/setup", handleSetup );
 
-  server.begin();
-  LOG0("HTTP server started\n");
   MDNS.addService("http", "tcp", 80);
+  MDNS.addServiceTxt( "http", "tcp", "path", "/" );
+  MDNS.addServiceTxt( "http", "tcp", "fw_name", APP_NAME );
+  MDNS.addServiceTxt( "http", "tcp", "fw_version", APP_VERSION );
+
+  server.begin();
+
+  LOG0("HTTP server started\n");
 }
 
 const bool WebServerHandler::shouldDoRestart()

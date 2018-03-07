@@ -129,7 +129,7 @@ void loop()
   webServerHandler.handle();
   alexaHandler.handle();
   ArduinoOTA.handle();
-  
+
   if(webServerHandler.shouldDoRestart())
   {
     restartSystem();
