@@ -13,3 +13,21 @@ First rename and edit
 
 ## Hardware
 [OBI Wifi Stecker Schuko](https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko/p/2291706)
+
+## OpenHAB - HTTP Binding sample
+
+```
+Switch pOD_Licht "Ein / Aus" {http=">[ON:GET:http://wifi-socket.ip/on] >[OFF:GET:http://wifi-socket.ip/off]"}
+```
+
+If you like to read the state of the socket by OpenHAB. First create a file `getState.js` in the `transform` directory with the following content:
+```
+JSON.parse(input).state;
+```
+
+add
+```
+<[http://wifi-socket.ip/state:30000:JS(getState.js)]
+```
+to the `Switch` definition. Every 30s the state of the socket will be checked.
+ 
