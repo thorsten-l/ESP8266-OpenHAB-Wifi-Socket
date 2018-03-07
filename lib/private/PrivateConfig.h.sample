@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+#define APP_NAME "WiFi OpenHAB Socket"
 #define APP_VERSION "2.0.4"
 #define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
 

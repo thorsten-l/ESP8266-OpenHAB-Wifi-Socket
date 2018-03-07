@@ -3,6 +3,7 @@
 #include <log.hpp>
 #include <PrivateConfig.h>
 #include <Global.hpp>
+#include <ESP8266mDNS.h>
 #include "OTASetup.hpp"
 
 char hostnameBuffer[96];
@@ -106,6 +107,8 @@ void OTASetup::setup()
   });
 
   ArduinoOTA.begin();
+  MDNS.addServiceTxt("arduino", "tcp", "fw_name", APP_NAME );
+  MDNS.addServiceTxt("arduino", "tcp", "fw_version", APP_VERSION );
 }
 
 void OTASetup::write()
