@@ -19,6 +19,6 @@ lib_deps = ESPAsyncTCP
            ESP8266mDNS
 
 ; For OTA firmware upload over the air you have to uncommend
-; the following two lines   vvvvvvv- mac address
+; the following two lines   vvvvvvv- mac address 
 ; upload_port = wifi-socket-xxxxxxx.local
 ; upload_flags = --auth=otapass
