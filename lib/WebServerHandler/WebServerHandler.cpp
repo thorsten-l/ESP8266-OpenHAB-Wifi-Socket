@@ -15,7 +15,7 @@
 
 WebServerHandler webServerHandler;
 ESP8266WebServer server(80);
-char buffer[2048];
+char buffer[4096];
 
 void jsonStatus()
 {
@@ -54,6 +54,9 @@ void handleSetup()
 
     openHabHandler.setEnabled( server.arg("ohabenabled").length() > 0 );
     openHabHandler.setAuthentication( server.arg("ohabauth").length() > 0 );
+    server.arg( "ohabitem" ).toCharArray( buffer, 64 );
+    buffer[64]=0;
+    openHabHandler.setItemName(buffer);
     server.arg( "ohabhost" ).toCharArray( buffer, 64 );
     buffer[64]=0;
     openHabHandler.setHost(buffer);
@@ -114,6 +117,7 @@ void handleSetup()
            otaSetup.getPassword(),
 
            (openHabHandler.isEnabled()) ? "checked" : "",
+           openHabHandler.getItemName(),
            openHabHandler.getHost(),
            openHabHandler.getPort(),
            (openHabHandler.useAuthentication()) ? "checked" : "",

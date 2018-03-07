@@ -29,6 +29,7 @@ const char *setupPage =
 
       "<h2>OpenHAB</h2>"
       "<p>OpenHAB Callback Enabled <input type='checkbox' name='ohabenabled' value='true' %s><p>"
+      "<p>OpenHAB Item Name <input type='text' name='ohabitem' size='68' maxlength='64' value='%s'></p>"
       "<p>OpenHAB Host <input type='text' name='ohabhost' size='68' maxlength='64' value='%s'></p>"
       "<p>OpenHAB Port <input type='text' name='ohabport' size='68' maxlength='64' value='%d'></p>"
       "<p>OpenHAB Use Authentication <input type='checkbox' name='ohabauth' value='true' %s><p>"
