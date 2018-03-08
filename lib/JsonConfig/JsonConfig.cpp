@@ -30,6 +30,22 @@ const unsigned int JsonConfig::getUInt(const char *name)
   return value;
 }
 
+const unsigned int JsonConfig::getUInt(const char *name, const unsigned int defvalue )
+{
+  unsigned int value = defvalue;
+
+  //Serial.print( "  - name = " );
+  //Serial.println( name );
+  if( json->containsKey(name))
+  {
+    value = json->get<unsigned int>(name);
+  }
+  //Serial.print( "    uint = " );
+  //Serial.println( value );
+
+  return value;
+}
+
 const bool JsonConfig::getBool(const char *name)
 {
   //Serial.print( "  - name = " );

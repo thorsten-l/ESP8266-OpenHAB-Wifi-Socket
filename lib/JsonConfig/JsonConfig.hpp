@@ -18,6 +18,7 @@ public:
 
   const char* get(const char *name);
   const unsigned int getUInt(const char *name);
+  const unsigned int getUInt(const char *name, const unsigned int defvalue );
   const bool getBool(const char *name);
 
   void set( const char *name, const char* value );
