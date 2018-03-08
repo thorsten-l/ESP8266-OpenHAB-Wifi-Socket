@@ -1,6 +1,7 @@
 # ESP8266-OpenHAB-Wifi-Socket
 Alternative Firmware for https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko/p/2291706
 
+Since version 2.0.6 the firmware can also callback OpenHAB 2.x items.
 Since version 1.1.0 the WiFi Socket firmware can communicate direct with Amazon Alexa (Echo).
 
 ## Compile
@@ -21,6 +22,7 @@ First rename and edit
 | OTA Hostname | wifi-socket-`esp id` | *O*ver *T*he *A*ir hostname |
 | OTA Password | otapass | OTA firmware upload password |
 | OpenHAB Callback Enabled | false | |
+| OpenHAB Version | 2 | Callback for OpenHAB version 1 or 2 |
 | OpenHAB Item Name | pOD_Licht | |
 | OpenHAB Host | 192.168.1.1 | |
 | OpenHAB Port | 80 | |
