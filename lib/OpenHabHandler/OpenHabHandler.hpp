@@ -11,16 +11,20 @@ class OpenHabHandler : public JsonConfig
 private:
   char host[65];
   int port;
+  int version;
   char itemName[65];
   char credentials[65];
   bool authentication;
   bool enabled;
+  void sendValueV1( const char* value );
+  void sendValueV2( const char* value );
 
 public:
   OpenHabHandler();
 
   const char* getHost();
   const int getPort();
+  const int getVersion();
   const char* getItemName();
   const char* getCredentials();
   const bool useAuthentication();
@@ -28,6 +32,7 @@ public:
 
   void setHost( const char* value );
   void setPort( const int value );
+  void setVersion( const int value );
   void setItemName( const char* value );
   void setCredentials( const char* value );
   void setAuthentication( const bool value );

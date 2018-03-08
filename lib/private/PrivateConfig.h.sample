@@ -18,6 +18,7 @@
 
 #define OHAB_HOST "192.168.1.1"
 #define OHAB_PORT 80
+#define OHAB_VERSION 2
 
 // #undef OHAB_USE_AUTH if your OpenHAB server does not need authentication
 #define OHAB_USE_AUTHENTICATION false

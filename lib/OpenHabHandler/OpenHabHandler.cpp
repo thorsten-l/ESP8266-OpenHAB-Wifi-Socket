@@ -16,6 +16,7 @@ OpenHabHandler::OpenHabHandler() :
   strcpy( credentials, OHAB_CREDENTIALS );
   authentication = OHAB_USE_AUTHENTICATION;
   enabled = OHAB_ENABLE_CALLBACK;
+  version = OHAB_VERSION;
 }
 
 const char* OpenHabHandler::getHost()
@@ -38,6 +39,11 @@ const int OpenHabHandler::getPort()
   return port;
 }
 
+const int OpenHabHandler::getVersion()
+{
+  return version;
+}
+
 const char* OpenHabHandler::getItemName()
 {
   return itemName;
@@ -57,6 +63,11 @@ void OpenHabHandler::setHost(const char *value)
 void OpenHabHandler::setPort(const int value)
 {
   port = value;
+}
+
+void OpenHabHandler::setVersion(const int value)
+{
+  version = value;
 }
 
 void OpenHabHandler::setItemName(const char *value)
@@ -93,7 +104,8 @@ void OpenHabHandler::setup()
     {
       enabled = getBool( "enabled" );
       strcpy( host, get("host"));
-      port = getUInt("port");
+      port = getUInt("port", OHAB_PORT );
+      version = getUInt("version", OHAB_VERSION );
       strcpy( itemName, get("item"));
       authentication = getBool( "auth" );
       strcpy( credentials, get("cred"));
@@ -116,6 +128,7 @@ void OpenHabHandler::write()
   set( "host", host );
   setBool( "enabled", enabled );
   setUInt( "port", port );
+  setUInt( "version", version );
   set( "item", itemName );
   setBool( "auth", authentication );
   set( "cred", credentials );
@@ -129,6 +142,8 @@ void OpenHabHandler::print()
   Serial.println(host);
   Serial.print("  port = ");
   Serial.println(port);
+  Serial.print("  version = ");
+  Serial.println(version);
   Serial.print("  item name = ");
   Serial.println(itemName);
   Serial.print("  credentials = ");
@@ -140,48 +155,119 @@ void OpenHabHandler::print()
   Serial.println("-------------------------------------------------------------------------------\n");
 }
 
+
+void OpenHabHandler::sendValueV1( const char* value )
+{
+  WiFiClient client;
+
+  Serial.println( "Sending to OpenHab V1");
+  Serial.print( "openhab host = ");
+  Serial.print( host );
+  Serial.print( ", port = ");
+  Serial.println( port );
+
+  if (!client.connect( host, port ))
+  {
+    Serial.println("connection failed");
+    client.stop();
+    return;
+  }
+
+  String request = String("GET /CMD?") + itemName + "=" + value + " HTTP/1.1\r\n";
+
+  if( authentication )
+  {
+    request = request + "Authorization: Basic " + credentials + "\r\n";
+  }
+
+  request = request + "Host: " + host + "\r\nConnection: close\r\n\r\n";
+
+  //Serial.println( "\n\n--- Request ---\n" + request );
+
+  client.print(request);
+  delay(50);
+
+  //Serial.println( "--- Response ---" );
+  // Read all the lines of the reply from server and print them to Serial
+  while (client.available())
+  {
+    String line = client.readStringUntil('\r');
+    //Serial.print(line);
+  }
+
+  //Serial.println("\nclosing connection");
+  client.stop();
+}
+
+void OpenHabHandler::sendValueV2( const char* value )
+{
+  WiFiClient client;
+
+  Serial.println( "Sending to OpenHab V2");
+  Serial.print( "openhab host = ");
+  Serial.print( host );
+  Serial.print( ", port = ");
+  Serial.println( port );
+
+  if (!client.connect( host, port ))
+  {
+    Serial.println("connection failed");
+    client.stop();
+    return;
+  }
+
+  String request = String( "POST /rest/items/" ) + itemName + " HTTP/1.1\r\n";
+  request =  request + "Host: " + host + "\r\n";
+
+  request += "Cache-Control: no-cache\r\n";
+  request += "Accept: application/json\r\n";
+  request += "Content-Type: text/plain\r\n";
+  request += "Content-Length: ";
+  request += String(strlen(value));
+  request +=  "\r\n";
+  request += "Connection: close\r\n";
+
+  if( authentication )
+  {
+    request = request + "Authorization: Basic " + credentials + "\r\n";
+  }
+
+  request +=  "\r\n";
+
+  request = request + value;
+
+  // Serial.println( "\n\n--- Request ---\n" + request );
+
+  client.print(request);
+  client.flush();
+  client.stop();
+
+  // Serial.println( "--- Response ---" );
+  // Read all the lines of the reply from server and print them to Serial
+  while (client.connected())
+  {
+    if( client.available())
+    {
+      String line = client.readStringUntil('\r');
+      // Serial.print(line);
+    }
+  }
+
+  // Serial.println("\nclosing connection");
+}
+
+
 void OpenHabHandler::sendValue( const char* value )
 {
   if( enabled )
   {
-    WiFiClient client;
-
-    Serial.println( "Sending to OpenHab");
-    Serial.print( "openhab host = ");
-    Serial.print( host );
-    Serial.print( ", port = ");
-    Serial.println( port );
-
-    if (!client.connect( host, port ))
+    if( version == 1 )
     {
-      Serial.println("connection failed");
-      client.stop();
-      return;
+      sendValueV1( value );
     }
-
-    String request = String("GET /CMD?") + itemName + "=" + value + " HTTP/1.1\r\n";
-
-    if( authentication )
+    else
     {
-      request = request + "Authorization: Basic " + credentials + "\r\n";
+      sendValueV2( value );
     }
-
-    request = request + "Host: " + host + "\r\nConnection: close\r\n\r\n";
-
-    //Serial.println( "\n\n--- Request ---\n" + request );
-
-    client.print(request);
-    delay(50);
-
-    //Serial.println( "--- Response ---" );
-    // Read all the lines of the reply from server and print them to Serial
-    while (client.available())
-    {
-      String line = client.readStringUntil('\r');
-      //Serial.print(line);
-    }
-
-    //Serial.println("\nclosing connection");
-    client.stop();
   }
 }

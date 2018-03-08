@@ -53,6 +53,11 @@ void handleSetup()
     otaSetup.setPassword(buffer);
 
     openHabHandler.setEnabled( server.arg("ohabenabled").length() > 0 );
+
+    server.arg( "ohabversion" ).toCharArray( buffer, 4 );
+    buffer[4]=0;
+    openHabHandler.setVersion( atoi(buffer));
+
     openHabHandler.setAuthentication( server.arg("ohabauth").length() > 0 );
     server.arg( "ohabitem" ).toCharArray( buffer, 64 );
     buffer[64]=0;
@@ -117,6 +122,10 @@ void handleSetup()
            otaSetup.getPassword(),
 
            (openHabHandler.isEnabled()) ? "checked" : "",
+
+           ( openHabHandler.getVersion() == 1 ) ? "selected" : "",
+           ( openHabHandler.getVersion() == 2 ) ? "selected" : "",
+
            openHabHandler.getItemName(),
            openHabHandler.getHost(),
            openHabHandler.getPort(),
