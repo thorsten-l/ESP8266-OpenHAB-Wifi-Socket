@@ -1,14 +1,7 @@
 #ifndef __PRIVATE_CONFIG_H__
 #define __PRIVATE_CONFIG_H__
 
-#include <Arduino.h>
-
-#define APP_NAME "WiFi OpenHAB Socket"
-#define APP_VERSION "2.0.6"
-#define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
-
-#define WIFI_SSID "SSID"
-#define WIFI_PWD "PASS"
+#include "ApplicationConfig.h"
 
 #define ALEXA_ENABLED true
 #define ALEXA_DEVICENAME "Steckdose"
