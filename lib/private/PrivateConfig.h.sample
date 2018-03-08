@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 #define APP_NAME "WiFi OpenHAB Socket"
-#define APP_VERSION "2.0.5"
+#define APP_VERSION "2.0.6"
 #define APP_AUTHOR "Dr. Thorsten Ludewig <t.ludewig@gmail.com>"
 
 #define WIFI_SSID "SSID"
