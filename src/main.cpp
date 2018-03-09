@@ -15,6 +15,7 @@
 #include <AlexaHandler.hpp>
 #include <WebServerHandler.hpp>
 #include <OpenHabHandler.hpp>
+#include <MqttHandler.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -27,6 +28,23 @@ void powerButtonPressed()
 
   timestamp = millis();
 }
+
+void relayOn()
+{
+  LOG0("relayOn\n");
+  powerIsOn = false;
+  toggleRelay();
+  mqttHandler.sendValue( "ON" );
+}
+
+void relayOff()
+{
+  LOG0("relayOff\n");
+  powerIsOn = true;
+  toggleRelay();
+  mqttHandler.sendValue( "OFF" );
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -107,6 +125,7 @@ void setup()
   webServerHandler.setup();
   openHabHandler.setup();
   alexaHandler.setup();
+  mqttHandler.setup();
   setupDone = true;
 }
 
@@ -121,13 +140,17 @@ void loop()
 
     if( wifiHandler.isInStationMode() && wifiConnected )
     {
-      openHabHandler.sendValue((powerIsOn) ? "ON" : "OFF" );
+      LOG0("buttonPressed\n");
+      const char *value = (powerIsOn) ? "ON" : "OFF";
+      openHabHandler.sendValue( value );
+      mqttHandler.sendValue( value );
     }
   }
 
   wifiHandler.handle();
   webServerHandler.handle();
   alexaHandler.handle();
+  mqttHandler.handle();
   ArduinoOTA.handle();
 
   if(webServerHandler.shouldDoRestart())
