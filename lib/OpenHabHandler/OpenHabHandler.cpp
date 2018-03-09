@@ -8,7 +8,7 @@
 OpenHabHandler openHabHandler;
 
 OpenHabHandler::OpenHabHandler() :
-                                 JsonConfig( OPENHAB_HANDLER_FILE_NAME, OPENHAB_HANDLER_FILE_MAX_SIZE )
+                                 JsonConfig( OPENHAB_HANDLER_FILE_NAME )
 {
   strcpy( host, OHAB_HOST );
   port = OHAB_PORT;
