@@ -22,5 +22,7 @@ extern Ticker watchdogTicker;
 
 extern void restartSystem();
 extern void toggleRelay();
+extern void relayOn();
+extern void relayOff();
 
 #endif
