@@ -3,7 +3,7 @@
   "host" : "192.168.1.1",
   "port" : 80,
   "version" : 2,
-  "use.authentication" : true,
+  "auth" : true,
   "credentials" : "SGFsbG86V2VsdA==",
   "item.name" : "WifiSocket1",
 }
