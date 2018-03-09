@@ -6,7 +6,7 @@
 char ssidBuffer[256];
 WifiConfig wifiConfig;
 
-WifiConfig::WifiConfig() : JsonConfig( WIFI_CONFIG_FILE_NAME, WIFI_CONFIG_FILE_MAX_SIZE )
+WifiConfig::WifiConfig() : JsonConfig( WIFI_CONFIG_FILE_NAME )
 {
   success = false;
   init();
