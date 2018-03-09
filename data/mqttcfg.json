@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "clientid": "wifi-socket-1",
+  "host": "192.168.1.1",
+  "port": 1883,
+  "auth": true,
+  "user": "user",
+  "password": "password",
+  "intopic": "socket1/in",
+  "outtopic": "socket1/out"
+}
