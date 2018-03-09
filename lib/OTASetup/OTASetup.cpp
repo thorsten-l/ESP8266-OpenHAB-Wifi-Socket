@@ -9,7 +9,7 @@
 char hostnameBuffer[96];
 OTASetup otaSetup;
 
-OTASetup::OTASetup() : JsonConfig( OTA_CONFIG_FILE_NAME, OTA_CONFIG_FILE_MAX_SIZE )
+OTASetup::OTASetup() : JsonConfig( OTA_CONFIG_FILE_NAME )
 {
   strcpy( hostname, OTA_HOSTNAME );
   strcpy( password, OTA_PASSWORD );
