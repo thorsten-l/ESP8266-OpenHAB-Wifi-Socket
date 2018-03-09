@@ -4,10 +4,9 @@
 #include <log.hpp>
 #include "JsonConfig.hpp"
 
-JsonConfig::JsonConfig( const char* _filename, int _fileBufferSize )  :
-  filename(_filename), fileBufferSize(_fileBufferSize)
-{
-}
+static char buffer[JSON_FILE_BUFFER_SIZE+1];
+
+JsonConfig::JsonConfig( const char* _filename ) : filename(_filename) { }
 
 const char* JsonConfig::get(const char *name)
 {
@@ -88,10 +87,10 @@ bool JsonConfig::exists()
   return configFileExists;
 }
 
+
 bool JsonConfig::load()
 {
   bool success = false;
-  char buffer[fileBufferSize + 1]; // + trailing zero
 
   if (!SPIFFS.begin())
   {
@@ -109,23 +108,25 @@ bool JsonConfig::load()
     {
       LOG1("Loading configuration from %s file...\n", filename );
 
-      if( configFile.size() > fileBufferSize )
+      if( configFile.size() > JSON_FILE_BUFFER_SIZE )
       {
-        Serial.printf( "ERROR: %s file exceeds %d bytes.\n", filename, fileBufferSize);
+        Serial.printf( "ERROR: %s file exceeds %d bytes.\n", filename, JSON_FILE_BUFFER_SIZE);
       }
       else
       {
-        int bytesRead = configFile.readBytes(buffer, fileBufferSize );
+        int bytesRead = configFile.readBytes(buffer, JSON_FILE_BUFFER_SIZE );
+        configFile.close();
+
         LOG1( "%d bytes read from config file.\n", bytesRead );
 
         buffer[bytesRead] = 0;
 
-/*
+        /*
         Serial.println("----------------------------------------------------");
         Serial.println( buffer );
         Serial.println("----------------------------------------------------");
         Serial.println();
-*/
+        */
 
         json = &jsonBuffer.parseObject(buffer, bytesRead);
 
@@ -136,10 +137,9 @@ bool JsonConfig::load()
         else
         {
           success = true;
+          // print();
         }
       }
-
-      configFile.close();
     }
 
     SPIFFS.end();
@@ -155,6 +155,18 @@ void JsonConfig::write()
     LOG0("Failed to mount file system");
     return;
   }
+
+ /*
+  FSInfo fs_info;
+  SPIFFS.info(fs_info);
+
+  Serial.printf( "--- SPIFFS Info ---\ntotal bytes = %d\n", fs_info.totalBytes );
+  Serial.printf( "used bytes = %d\n", fs_info.usedBytes );
+  Serial.printf( "block size = %d\n", fs_info.blockSize );
+  Serial.printf( "page size = %d\n", fs_info.pageSize );
+  Serial.printf( "max open files = %d\n", fs_info.maxOpenFiles );
+  Serial.printf( "max path length = %d\n", fs_info.maxPathLength );
+*/
 
   Serial.printf("writing file %s.\n", filename );
 

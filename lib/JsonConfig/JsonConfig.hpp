@@ -3,18 +3,19 @@
 
 #include <ArduinoJson.h>
 
+#define JSON_FILE_BUFFER_SIZE 512
+
 class JsonConfig
 {
 private:
   const char* filename;
   const char* fileBuffer;
-  int fileBufferSize;
 
   DynamicJsonBuffer jsonBuffer;
   JsonObject* json;
 
 public:
-  JsonConfig( const char* _filename, int _fileBufferSize );
+  JsonConfig( const char* _filename );
 
   const char* get(const char *name);
   const unsigned int getUInt(const char *name);
