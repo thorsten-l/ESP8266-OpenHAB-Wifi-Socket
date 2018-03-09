@@ -219,15 +219,13 @@ void WebServerHandler::setup()
 
   server.on("/on", []()
   {
-    powerIsOn = false;
-    toggleRelay();
+    relayOn();
     jsonStatus();
   });
 
   server.on("/off", []()
   {
-    powerIsOn = true;
-    toggleRelay();
+    relayOff();
     jsonStatus();
   });
 
