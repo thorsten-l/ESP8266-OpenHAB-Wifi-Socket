@@ -29,4 +29,16 @@
 // OpenHAB Switch Item to trigger
 #define OHAB_ITEM "pOD_Licht"
 
+// MQTT broker version >= 3.1 for authenticatioin is needed
+#define MQTT_ENABLED true
+#define MQTT_HOST "192.168.1.1"
+#define MQTT_PORT 1883
+#define MQTT_CLIENTID "wifi-socket-1"
+#define MQTT_USE_AUTHENTICATION true
+#define MQTT_USER "user"
+#define MQTT_PASSWORD "password"
+#define MQTT_IN_TOPIC "socket1/in"
+#define MQTT_OUT_TOPIC "socket1/out"
+
+
 #endif
