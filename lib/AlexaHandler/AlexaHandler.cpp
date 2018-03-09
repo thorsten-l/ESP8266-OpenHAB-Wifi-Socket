@@ -9,7 +9,7 @@
 static fauxmoESP fauxmo;
 AlexaHandler alexaHandler;
 
-AlexaHandler::AlexaHandler() : JsonConfig( ALEXA_HANDLER_FILE_NAME, ALEXA_HANDLER_FILE_MAX_SIZE )
+AlexaHandler::AlexaHandler() : JsonConfig( ALEXA_HANDLER_FILE_NAME )
 {
   enabled = ALEXA_ENABLED;
   strcpy( deviceName, ALEXA_DEVICENAME );
