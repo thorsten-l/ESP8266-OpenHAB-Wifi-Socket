@@ -2,9 +2,9 @@
 
 # ESP8266-OpenHAB-Wifi-Socket
 
-I've learned a lot during writing this code and i decided to rewrite it.
+I've learned a lot during writing this code and i decided to rewrite it. ;-)
 
-Find the new Code [here](https://github.com/thorsten-l/ESP8266-WiFi-Socket-NG)
+Find the new code [here](https://github.com/thorsten-l/ESP8266-WiFi-Socket-NG)
 
 
 Alternative Firmware for https://www.obi.de/hausfunksteuerung/wifi-stecker-schuko/p/2291706
